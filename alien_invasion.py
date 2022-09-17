@@ -1,26 +1,27 @@
 import pygame
+from pygame.sprite import Group
 
 from settings import Settings
 from ship import Ship
-import game_functions as gf
-
+import game_functions
 def run_game():
     # Inicjalizacja gry i utworzenie obiektu ekranu.
     pygame.init()
-    ai_settings = Settings()
-    screen = pygame.display.set_mode((ai_settings.screen_width, ai_settings.screen_height))
+    game_settings = Settings()
+    screen = pygame.display.set_mode((game_settings.screen_width, game_settings.screen_height))
     pygame.display.set_caption("Inwazja obcych")
 
     # Utworzenie statku kosmicznego.
-    ship = Ship(ai_settings, screen)
+    ship = Ship(game_settings, screen)
 
-    # Wyświetlenie ostatnio zmodyfikowanego ekranu.
-    # bg_color = (230, 230, 230)
+    # Utworzenie grupy przeznaczonej do przechowywania pocisków.
+    bullets = Group()
 
     # Rozpoczęcie pętli głównej gry.
     while True:
-        gf.check_events(ship)
+        game_functions.check_events(game_settings, screen, ship, bullets)
         ship.update()
-        gf.update_screen(ai_settings, screen, ship)
+        game_functions.update_bullets(bullets)
+        game_functions.update_screen(game_settings, screen, ship, bullets)
 
 run_game()

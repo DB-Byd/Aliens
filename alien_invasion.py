@@ -1,4 +1,5 @@
 import pygame
+
 from settings import Settings
 from ship import Ship
 import game_functions as gf
@@ -11,14 +12,15 @@ def run_game():
     pygame.display.set_caption("Inwazja obcych")
 
     # Utworzenie statku kosmicznego.
-    ship = Ship(screen)
+    ship = Ship(ai_settings, screen)
 
     # Wyświetlenie ostatnio zmodyfikowanego ekranu.
-    bg_color = (230, 230, 230)
+    # bg_color = (230, 230, 230)
 
     # Rozpoczęcie pętli głównej gry.
     while True:
-        gf.check_events()
+        gf.check_events(ship)
+        ship.update()
         gf.update_screen(ai_settings, screen, ship)
 
 run_game()
